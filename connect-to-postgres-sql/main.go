@@ -15,6 +15,12 @@ type PostgresConfig struct {
 	SSLmode  string
 }
 
+type User struct {
+	Id int
+	Name string
+	Email string
+}
+
 func (cfg PostgresConfig) String() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Database, cfg.SSLmode)
 }
@@ -36,17 +42,13 @@ func main() {
 	checkErr(err)
 
 	defer db.Close()
-	fmt.Println("connected!")
+	fmt.Println("db is connected!\n")
 
 	//print out one query row
-	var id int
-	var name, email string
-	row := db.QueryRow(`
-  SELECT * 
-  FROM customers
-  WHERE id=$1`, 1)
+  user := User{}
+	row := db.QueryRow(`SELECT * FROM customers WHERE id=$1`, 1)
 
-	err = row.Scan(&name, &email, &id)
+	err = row.Scan(&user.Name, &user.Email, &user.Id)
 
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -56,10 +58,20 @@ func main() {
 		}
 	}
 
-	fmt.Println(email, id)
+	fmt.Println(user.Id, user.Name, user.Email)
 
 	//print out multiple rows
-	
+	rows, err := db.Query(`SELECT * FROM customers`)
+	checkErr(err)
+
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&user.Name, &user.Email, &user.Id)
+		checkErr(err)
+		fmt.Println(user.Id, user.Name, user.Email)
+	}
+
 }
 
 func checkErr(err error) {

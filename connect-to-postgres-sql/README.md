@@ -27,13 +27,21 @@ Functions to test connections to a DB:
 - `func Open(driverName, dataSourceName string) (*DB, error)`
 - `func (db *DB) Ping() error`
 
-Functions to run query to a db:
-- functions does not return data, use `Exec`
+Functions to run query and return data:
+1. single row
+- `QueryRow`, `func (db *DB) QueryRow(query string, args ...any) *Row` return pointer to a single row
+- then call `Scan`, `func (r \*Row) Scan(dest ...any) error` will take a row and scan each field into golang var
 
-- `QueryRow`, `func (db *DB) QueryRow(query string, args ...any) *Row` returns at most single row
-- `Query`, `func (db *DB) Query(query string, args ...any) (*Rows, error)` will return multiple rows, using `Rows.Next`, `func (rs \*Rows) Next() bool` to tell if it reaches the end of the rows
-- `func (r \*Row) Scan(dest ...any) error` 
 
+2. multiple rows
+- `Query`, `func (db *DB) Query(query string, args ...any) (*Rows, error)` will return the pointer to the rows(perhaps a linked list or tree)
+- use `Rows.Next`, `func (rs \*Rows) Next() bool` for iteration
+- need `rows.Close()` to close 
+- 
+
+
+Functions does not return data
+- `Exec`, `
 
 ```go
 //connecting to a db
@@ -48,22 +56,37 @@ log.Fatal(err)
 //query for a single row
 var id int
 var name, email string
-row := db.QueryRow(`
-  SELECT * 
-  FROM customers
-  WHERE id=$1`,1)
 
-err = row.Scan(&id, &name, &email)
+row := db.QueryRow(`SELECT * FROM customers WHERE id=$1`, 1)
+err = row.Scan(&name, &email, &id)
 
 if err != nil {
   if err == sql.ErrNoRows {
     fmt.Println("no rows")
-  }else {
+  } else {
     panic(err)
   }
 }
 
+fmt.Println(email, id)
+
 //query for multiple rows
+//print out multiple rows
+rows, err := db.Query(`SELECT * FROM customers`)
+checkErr(err)
+defer rows.Close()
+//var to store data
+s := "RETRIEVED RECORDS: \n"
+
+for rows.Next() {
+  err = rows.Scan(&name, &email, &id)
+  checkErr(err)
+  s += name + " " + email + "\n"
+}
+
+fmt.Println(s)
+
+
 ```
 ---
 #### Reference
