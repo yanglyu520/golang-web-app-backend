@@ -25,7 +25,7 @@ func main() {
 		User:     "postgres",
 		Password: "556690",
 		Database: "test_db",
-		SSLmode: "disable",
+		SSLmode:  "disable",
 	}
 	//open the db using the sql driver
 	db, err := sql.Open("postgres", cfg.String())
@@ -38,9 +38,28 @@ func main() {
 	defer db.Close()
 	fmt.Println("connected!")
 
-	//print out the query rows
+	//print out one query row
+	var id int
+	var name, email string
+	row := db.QueryRow(`
+  SELECT * 
+  FROM customers
+  WHERE id=$1`, 1)
 
+	err = row.Scan(&name, &email, &id)
 
+	if err != nil {
+		if err == sql.ErrNoRows {
+			fmt.Println("no rows")
+		} else {
+			panic(err)
+		}
+	}
+
+	fmt.Println(email, id)
+
+	//print out multiple rows
+	
 }
 
 func checkErr(err error) {
@@ -48,4 +67,3 @@ func checkErr(err error) {
 		panic(err)
 	}
 }
-
