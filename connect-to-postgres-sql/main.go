@@ -36,7 +36,10 @@ func main() {
 	checkErr(err)
 
 	defer db.Close()
-	fmt.Println("connected")
+	fmt.Println("connected!")
+
+	//print out the query rows
+
 
 }
 
@@ -45,3 +48,4 @@ func checkErr(err error) {
 		panic(err)
 	}
 }
+
