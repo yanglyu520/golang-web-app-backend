@@ -32,12 +32,12 @@ Functions to run query and return data:
 - `QueryRow`, `func (db *DB) QueryRow(query string, args ...any) *Row` return pointer to a single row
 - then call `Scan`, `func (r \*Row) Scan(dest ...any) error` will take a row and scan each field into golang var
 
-
 2. multiple rows
 - `Query`, `func (db *DB) Query(query string, args ...any) (*Rows, error)` will return the pointer to the rows(perhaps a linked list or tree)
 - use `Rows.Next`, `func (rs \*Rows) Next() bool` for iteration
 - need `rows.Close()` to close 
-- 
+- `rows.Err() error` returns the error, if any, that was encountered during iteration. Err may be called after an explicit or implicit Close.
+
 
 
 Functions does not return data

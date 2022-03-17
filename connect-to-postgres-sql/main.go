@@ -4,7 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
+	"io"
+	"net/http"
 )
+
+var db *sql.DB
+var err error
 
 type PostgresConfig struct {
 	Host     string
@@ -16,15 +21,16 @@ type PostgresConfig struct {
 }
 
 type User struct {
-	Id int
-	Name string
+	Id    int
+	Name  string
 	Email string
 }
 
 func (cfg PostgresConfig) String() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Database, cfg.SSLmode)
 }
-func main() {
+
+func init() {
 	cfg := PostgresConfig{
 		Host:     "localhost",
 		Port:     "5432",
@@ -33,19 +39,28 @@ func main() {
 		Database: "test_db",
 		SSLmode:  "disable",
 	}
-	//open the db using the sql driver
+
 	db, err := sql.Open("postgres", cfg.String())
 	checkErr(err)
 
-	//Ping to find if the db works
 	err = db.Ping()
 	checkErr(err)
 
-	defer db.Close()
+	//defer db.Close()
 	fmt.Println("db is connected!\n")
+}
 
-	//print out one query row
-  user := User{}
+func main() {
+	http.Handle("/s", http.HandlerFunc(singleRow))
+	http.Handle("/m", http.HandlerFunc(multipleRows))
+	http.Handle("/", http.HandlerFunc(test))
+
+	http.ListenAndServe(":8080", nil)
+
+}
+
+func singleRow(w http.ResponseWriter, r *http.Request) {
+	user := User{}
 	row := db.QueryRow(`SELECT * FROM customers WHERE id=$1`, 1)
 
 	err = row.Scan(&user.Name, &user.Email, &user.Id)
@@ -57,10 +72,16 @@ func main() {
 			panic(err)
 		}
 	}
+	fmt.Fprintf(w, "%d, %s, %s", user.Id, user.Name, user.Email)
 
-	fmt.Println(user.Id, user.Name, user.Email)
+}
 
-	//print out multiple rows
+func multipleRows(w http.ResponseWriter, r *http.Request) {
+	user := User{}
+	var users []User
+
+	printRequest(r)
+
 	rows, err := db.Query(`SELECT * FROM customers`)
 	checkErr(err)
 
@@ -69,13 +90,30 @@ func main() {
 	for rows.Next() {
 		err = rows.Scan(&user.Name, &user.Email, &user.Id)
 		checkErr(err)
-		fmt.Println(user.Id, user.Name, user.Email)
+		users = append(users, user)
 	}
 
+	for _, v := range users {
+		fmt.Fprintf(w, "%d, %s, %s", v.Id, v.Name, v.Email)
+	}
+
+	fmt.Println(r.Method)
+	fmt.Println(r.URL.Path)
 }
 
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func test(w http.ResponseWriter, r *http.Request) {
+	printRequest(r)
+	_, err := io.WriteString(w, "at index")
+	checkErr(err)
+}
+
+func printRequest(r *http.Request) {
+	fmt.Println(r.Method)
+	fmt.Println(r.URL.Path)
 }
