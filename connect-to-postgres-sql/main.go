@@ -96,9 +96,6 @@ func multipleRows(w http.ResponseWriter, r *http.Request) {
 	for _, v := range users {
 		fmt.Fprintf(w, "%d, %s, %s", v.Id, v.Name, v.Email)
 	}
-
-	fmt.Println(r.Method)
-	fmt.Println(r.URL.Path)
 }
 
 func checkErr(err error) {
