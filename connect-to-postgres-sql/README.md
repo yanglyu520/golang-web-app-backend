@@ -41,7 +41,7 @@ Functions to run query and return data:
 
 
 Functions does not return data
-- `Exec`, `
+- `Exec`
 
 ```go
 //connecting to a db
@@ -53,40 +53,18 @@ log.Fatal(err)
 if err := db.Ping(); err != nil {
 log.Fatal(err)
 }
-//query for a single row
-var id int
-var name, email string
 
+//query for a single row
 row := db.QueryRow(`SELECT * FROM customers WHERE id=$1`, 1)
 err = row.Scan(&name, &email, &id)
 
-if err != nil {
-  if err == sql.ErrNoRows {
-    fmt.Println("no rows")
-  } else {
-    panic(err)
-  }
-}
-
-fmt.Println(email, id)
-
 //query for multiple rows
-//print out multiple rows
 rows, err := db.Query(`SELECT * FROM customers`)
-checkErr(err)
 defer rows.Close()
-//var to store data
-s := "RETRIEVED RECORDS: \n"
-
 for rows.Next() {
   err = rows.Scan(&name, &email, &id)
   checkErr(err)
-  s += name + " " + email + "\n"
 }
-
-fmt.Println(s)
-
-
 ```
 ---
 #### Reference
