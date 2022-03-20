@@ -49,3 +49,7 @@ type Conn interface {
 ...
 
 ```
+
+
+## note
+run `telnet <IP ADDRESS OF SERVER PC> <PORT> or telnet localhost 8080` to start the web server on the tcp level
