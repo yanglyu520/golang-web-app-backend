@@ -3,8 +3,8 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io"
 	"net"
 )
 
@@ -23,11 +23,7 @@ func main() {
 		conn, err := li.Accept()
 		checkErr(err)
 		li.Addr()
-
-		//writeString function write the string to a writer
-		io.WriteString(conn, "hellllo, I write to the server")
-		//alternatively you can use fmt.Fprintf function
-		fmt.Fprintf(conn, "hoow are you")
+		go handle(conn)
 	}
 
 }
@@ -36,4 +32,15 @@ func checkErr(err error) {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func handle(conn net.Conn) {
+	scanner := bufio.NewScanner(conn)
+	for scanner.Scan() {
+		ln := scanner.Text()
+		fmt.Println(ln)
+	}
+	defer conn.Close()
+
+	fmt.Println("meow")
 }
