@@ -3,7 +3,8 @@
 ## Task1 : play with postman and finish below questions
 
 ## Task2: code a tcp server that does http request and send response and multiplexer
-
+- create a server that returns the URL and Method of a GET request
+- 
 ## Task3: code a http handler with built on server
 
 - return the url

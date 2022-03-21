@@ -6,22 +6,18 @@ HTTP Protocol: Request and Response
 ## HTTP request structure:
 
 1. request line
-Request-Line Format:
-- **Method** SP **Request-URI** SP **HTTP-Version** CRLF
-Ex:
-- GET /path/to/file/index.html HTTP/1.1
-2. headers
+- **Method** SP **Request-URI** SP **HTTP-Version**
+- GET /index.html HTTP/1.1
+2. request headers
 3. optional message body
 ---
 
 ## HTTP response Structure:
 
 1. status line
-Status-Line:
-- **HTTP-Version** SP **Status-Code** SP **Reason-Phrase** CRLF
-Ex:
+- **HTTP-Version** SP **Status-Code** SP **Reason-Phrase**
 - HTTP/1.1 200 OK
-2. headers
+2. response headers
 3. optional message body
 
 ## small exercise
