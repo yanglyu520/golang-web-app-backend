@@ -1,19 +1,19 @@
 
 # golang web app Playbook
-## Task1 : play with postman and finish below questions
+## Task1 : play with postman
 
-## Task2: code a tcp server that does http request and send response and multiplexer
+## Task2: code a tcp server
 - create a server that returns the URL and Method of a GET request
 - 
-## Task3: code a http handler with built on server
+## Task3: code a http handler
 
 - return the url
 - Return the request method
 - Write a hello world page
 
-## Task 4: code a multiplexer, a mux
+## Task 4: code a multiplexer
 
-## Task 5 : connect db to webapp that does below things
+## Task 5 : connect db to webapp
 
 ## Task 6: create a s3 bucket in AWS and put a text, retrieve the text from ur local go web app
 
