@@ -30,11 +30,7 @@ func (cfg PostgresConfig) String() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Database, cfg.SSLmode)
 }
 
-// func init() {
-	
-// }
-
-func main() {
+func init() {
 	cfg := PostgresConfig{
 		Host:     "localhost",
 		Port:     "5432",
@@ -44,36 +40,23 @@ func main() {
 		SSLmode:  "disable",
 	}
 
-	db, err := sql.Open("postgres", cfg.String())
+	db, err = sql.Open("postgres", cfg.String())
 	checkErr(err)
 
 	err = db.Ping()
 	checkErr(err)
 
-	defer db.Close()
 	fmt.Println("db is connected!\n")
+}
 
-	user := User{}
-	var users []User
+func main() {
+	defer db.Close()
 
-	rows, err := db.Query(`SELECT * FROM customers`)
-	checkErr(err)
+  http.Handle("/", http.HandlerFunc(index))
+	http.Handle("/s", http.HandlerFunc(singleRow))
+	http.Handle("/m", http.HandlerFunc(multipleRows))
 
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&user.Name, &user.Email, &user.Id)
-		checkErr(err)
-		users = append(users, user)
-	}
-	
-	fmt.Println(users)
-	//test()
-  // http.Handle("/", http.HandlerFunc(index))
-	// http.Handle("/s", http.HandlerFunc(singleRow))
-	// http.Handle("/m", http.HandlerFunc(multipleRows))
-
-	// http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", nil)
 
 }
 
@@ -131,23 +114,4 @@ func index(w http.ResponseWriter, r *http.Request) {
 func printRequest(r *http.Request) {
 	fmt.Println(r.Method)
 	fmt.Println(r.URL.Path)
-}
-
-func test() {
-	user := User{}
-	var users []User
-
-	rows, err := db.Query(`SELECT * FROM customers`)
-	checkErr(err)
-
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&user.Name, &user.Email, &user.Id)
-		checkErr(err)
-		users = append(users, user)
-	}
-	
-	fmt.Println(users)
-
 }

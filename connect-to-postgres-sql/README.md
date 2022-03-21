@@ -38,8 +38,6 @@ Functions to run query and return data:
 - need `rows.Close()` to close 
 - `rows.Err() error` returns the error, if any, that was encountered during iteration. Err may be called after an explicit or implicit Close.
 
-
-
 Functions does not return data
 - `Exec`
 

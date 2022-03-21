@@ -31,7 +31,7 @@ type Listener interface {
 
 ## type Conn
 
-the conn interface has inherited writer and reader interfaces
+- the conn interface has inherited writer and reader interfaces
 
 ```go
 type Conn interface {
@@ -46,10 +46,12 @@ type Conn interface {
 
 	// LocalAddr returns the local network address, if known.
 	LocalAddr() Addr
+	
 ...
 
+}
 ```
 
 
 ## note
-run `telnet <IP ADDRESS OF SERVER PC> <PORT> or telnet localhost 8080` to start the web server on the tcp level
+run `telnet <IP ADDRESS OF SERVER PC> <PORT>, ex: telnet localhost 8080` to start the web server on the tcp level
