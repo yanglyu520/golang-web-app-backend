@@ -16,6 +16,13 @@
 ## Exercise 4: code a multiplexer
 
 ## Exercise 5: connect db to webapp
+- download postgres and install
+if you just get the latest install package and just do the default options it should set up a server on your machine.
+- the postgres installer should create an app on your machine called "pgadmin" that you can use to run SQL on your server
+so you can use that to create a table
+
+- you can create a simple table
+- You can get your little web service that we made in Golang to actually query a row in that table, and return the contents as the response body
 
 ## Exercise 6: work with AWS, put web app in AWS Lambda
 - create a s3 bucket in AWS and put a text, retrieve the text from ur local go web app
