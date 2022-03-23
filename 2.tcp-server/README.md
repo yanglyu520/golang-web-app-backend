@@ -23,6 +23,3 @@ HTTP Protocol: Request and Response
 ## small exercise
 Open developer tool on Chrome. Use Option + ⌘ + J (on macOS)
 
----
-What left to do?
-1. Review TCP networking part
