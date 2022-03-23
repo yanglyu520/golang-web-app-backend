@@ -44,4 +44,11 @@ Amazon S3 exposes:
 - the website url will be:
 <bucket-name>.s3-website<AWS-region>.amazonaws.com
 - make sure the bucket policy allows the public reads, otherwise you will get the 403 forbidden error
-5. S3 CORS: cross-origin request 
+
+### 5. S3 CORS: cross-origin request 
+
+## Lambda
+1. Virtual functions
+2. Limited by time - short executions
+3. Run on-demand
+4. scaling is automated
