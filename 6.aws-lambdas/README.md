@@ -34,5 +34,11 @@ Amazon S3 exposes:
 - HTTP endpoint
 - HTTPS endpoint: encryption in flight
 3. Bucket Policies and Security
+- User based: IAM Policies
+- Resource based:
+  1. Bucket Policies
+  2. Object ACL - finer grain
+  3. Bucket ACL - less common
+
 4. S3 Websites
 5. S3 CORS
