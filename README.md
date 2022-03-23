@@ -1,22 +1,26 @@
 
 # golang web app Playbook
-## Task1 : play with postman
+## Exercise 1: play with postman
+- learning why we use postman
+- learning different usage to test API with postman
 
-## Task2: code a tcp server
+## Exercise 2: code a tcp server
 - create a server that returns the URL and Method of a GET request
 - 
-## Task3: code a http handler
+## Exercise 3: code a http handler
 
 - return the url
 - Return the request method
 - Write a hello world page
 
-## Task 4: code a multiplexer
+## Exercise 4: code a multiplexer
 
-## Task 5 : connect db to webapp
+## Exercise 5: connect db to webapp
 
-## Task 6: create a s3 bucket in AWS and put a text, retrieve the text from ur local go web app
+## Exercise 6: work with AWS, put web app in AWS Lambda
+- create a s3 bucket in AWS and put a text, retrieve the text from ur local go web app
+- put ur app in lambda and then connect to s3 bucket
 
-## Task 7: put ur app in lambda and then connect to s3 bucket
+## Exercise 7:
 
-## Task 8: connect web app from lambda to aws RDS
+## Exercise 8: 
