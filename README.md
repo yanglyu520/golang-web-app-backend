@@ -5,8 +5,8 @@
 - learning different usage to test API with postman
 
 ## Exercise 2: code a tcp server
-- create a server that returns the URL and Method of a GET request
-- 
+- task 1: create a tcp server that manually responds to a http request and returns the URL and Method of a GET request
+- task 2: create a mux manually on top of the tcp server in task1 to do the routing
 ## Exercise 3: code a http handler
 
 - return the url
@@ -14,21 +14,19 @@
 - Write a hello world page
 
 ## Exercise 4: code a multiplexer
+- use the mux package to pass a handler function to do the routing
 
 ## Exercise 5: connect db to webapp
 - download postgres and install
-if you just get the latest install package and just do the default options it should set up a server on your machine.
-- the postgres installer should create an app on your machine called "pgadmin" that you can use to run SQL on your server
-so you can use that to create a table
-
-- you can create a simple table
+- create a table
 - You can get your little web service that we made in Golang to actually query a row in that table, and return the contents as the response body
 
 ## Exercise 6: work with AWS, put web app in AWS Lambda
-- create a s3 bucket in AWS and put a text, retrieve the text from ur local go web app
+- create a s3 bucket in AWS and put a text
+- retrieve the text from ur local go web app
 - put ur app in lambda and then connect to s3 bucket
 
-## Exercise 7:
+## Exercise 7: API Gateway in AWS
 
 ## Exercise 8: 
 
