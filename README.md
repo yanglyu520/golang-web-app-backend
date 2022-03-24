@@ -26,6 +26,6 @@
 - retrieve the text from ur local go web app
 - put ur app in lambda and then connect to s3 bucket
 
-## Exercise 7: Add API Gateway in AWS to invoke the lambda function in exercise 6
+## Exercise 7: Add API Gateway in AWS to invoke the lambda function
 
 ## Exercise 8: 
