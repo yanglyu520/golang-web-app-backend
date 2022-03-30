@@ -5,10 +5,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"io/ioutil"
 	//"os"
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-lambda-go/lambda"
 	//"strings"
+	"context"
 )
 
 var s3Session *s3.S3
@@ -17,30 +18,21 @@ var s3Session *s3.S3
 const (
 	BUCKET_NAME = "yang-go-web-app-test"
 	REGION      = "ap-southeast-2"
-	OBJECT_KEY = "test.txt"
+	OBJECT_KEY  = "test.txt"
 )
+
+//a struct for lambda response
+type Response struct {
+	Message1 *s3.ListBucketsOutput
+	Message2 *s3.ListObjectsV2Output
+	Message3 string
+}
 
 func init() {
 	awsSession := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String(REGION),
 	}))
 	s3Session = s3.New(awsSession)
-}
-func main() {
-
-	//list all the buckets
-	fmt.Println(listBuckets())
-	fmt.Println("----------------------")
-
-	//list every object in a specified bucket
-	fmt.Println(listObjects())
-  
-	//a separator 
-	fmt.Println("----------------------")
-
-	//get/download object from a particular bucket
-	getObject()
-
 }
 
 func listBuckets() (resp *s3.ListBucketsOutput) {
@@ -58,7 +50,7 @@ func listObjects() (resp *s3.ListObjectsV2Output) {
 	return resp
 }
 
-func getObject() {
+func getObject() string {
 	resp, err := s3Session.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(BUCKET_NAME),
 		Key:    aws.String(OBJECT_KEY),
@@ -69,33 +61,23 @@ func getObject() {
 	//print out the resp
 	body, err := ioutil.ReadAll(resp.Body)
 	checkErr(err)
-	fmt.Println(string(body))
+	return fmt.Sprintf(string(body))
+}
+
+func Handler(ctx context.Context) (Response, error) {
+	return Response{
+		Message1: listBuckets(),
+		Message2: listObjects(),
+		Message3: getObject(),
+	}, nil
+}
+
+func main() {
+	lambda.Start(Handler)
 }
 
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-
-type Event struct {
-	ID float64
-	Value string
-}
-
-type Response struct {
-	Message string
-	OK bool
-}
-
-func Handler(event Event) (Response, error) {
-	return Response {
-		Message: fmt.Sprintf("Process Event ID %f", event.ID),
-		OK: true,
-	}, nil
-}
-
-func main() {
-	lambda.Start(Handler)
 }
