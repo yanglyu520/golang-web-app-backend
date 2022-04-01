@@ -27,8 +27,15 @@
 - put ur app in lambda and then connect to s3 bucket
 
 ## Exercise 7: Add API Gateway in AWS to invoke the lambda function
-- create an API gateway for your lambda function
-- Invoke your function through API gateway
+- create an API gateway for your lambda function from exercise 6
+- Manipulate your lambda function to print these results on the browser
+- Make sure your lambda function is invoked by api-gateway
+
+### Study goals
+- understand how to write a go web app using apigateway and lambda functions
+- how to do these in the aws console
+- learn to use sam cli to start a lambda function
+
 ## Exercise 8: Create microservices with lambda functions
 - put together the web with multiple lambda functions and have it invoked from API Gateway
 - Draw a diagram for your architecture
