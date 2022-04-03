@@ -1,5 +1,26 @@
 
 # golang web app Playbook
+
+---
+## What we building
+
+We eventually build a webapp with apigateway and multiple lambda functions serve as microservices and RDS as a database.
+## Goal in study
+1. Understand the tcp server
+2. Understand how to use the http server, mux
+3. Understand how to connect your golang web app to a database
+4. Understand how to use the aws sdk go to create a serverless web app
+
+## Users of this Playbook
+
+There are 3 stages of learning a programming language. These set of exercises are only targeting for understanding the packages packages that make a golang web backend.
+
+- Syntax
+- Packages
+- Idioms
+
+Therefore, it is a prerequisites that you have already understand the syntax of golang languages.
+---
 ## Exercise 1: play with postman
 - learning why we use postman
 - learning different usage to test API with postman
@@ -32,3 +53,12 @@
 ## Exercise 8: Create microservices with lambda functions
 - put together the web with multiple lambda functions and have it invoked from API Gateway
 - Draw a diagram for your architecture
+
+---
+## Extra Tools
+
+### Install the AWS SAM CLI on macOS
+[sam cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install-mac.html)
+
+Packages an AWS SAM application. This command creates a . zip file of your code and dependencies, and uploads the file to Amazon Simple Storage Service (Amazon S3).
+
