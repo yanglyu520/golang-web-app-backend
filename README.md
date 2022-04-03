@@ -76,5 +76,8 @@ When learning a particular package, it is good to look at it in this order
 ### Install the AWS SAM CLI on macOS
 [sam cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install-mac.html)
 
-Packages an AWS SAM application. This command creates a . zip file of your code and dependencies, and uploads the file to Amazon Simple Storage Service (Amazon S3).
+Note: make sure `aws cli` is working by running `aws iam list-users` to test first
 
+The common order of calls today is `sam init ->sam build ->sam deploy`
+
+As for the differences between those 2, `build` preprocesses your project files locally while package used to zip your project, push it to S3 bucket and returned a processed template (replacing code references) that you would subsequently `deploy` (this zipping, pushing to s3 and deploying is now handled by deploy command).
